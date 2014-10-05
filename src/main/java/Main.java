@@ -6,6 +6,9 @@ import org.eclipse.jetty.servlet.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
+import com.twilio.sdk.verbs.TwiMLResponse;
+import com.twilio.sdk.verbs.TwiMLException;
+import com.twilio.sdk.verbs.Say;
 
 public class Main extends HttpServlet {
   @Override
@@ -16,6 +19,8 @@ public class Main extends HttpServlet {
       showDatabase(req,resp);
     } else if (req.getRequestURI().endsWith("/away")) {
         showAway(req,resp);
+    } else if (req.getRequestURI().endsWith("/twilio")) {
+        twilioService(req,resp);
     } else {
       showHome(req,resp);
     }
@@ -30,6 +35,21 @@ public class Main extends HttpServlet {
       throws ServletException, IOException {
     resp.getWriter().print("this is away stuff");
   }
+
+
+public void twilioService(HttpServletRequest request, HttpServletResponse response) 
+      throws IOException {
+        // Create a TwiML response and add our friendly message.
+        TwiMLResponse twiml = new TwiMLResponse();
+        Say say = new Say("Hello Twilio Monkey");
+        try {
+            twiml.append(say);
+        } catch (TwiMLException e) {
+            e.printStackTrace();
+        }
+        response.setContentType("application/xml");
+        response.getWriter().print(twiml.toXML());
+    }
 
 
   private void showDatabase(HttpServletRequest req, HttpServletResponse resp)
