@@ -12,11 +12,25 @@ import com.twilio.sdk.verbs.Say;
 
 public class Main extends HttpServlet {
   @Override
-  protected void service(HttpServletRequest req, HttpServletResponse resp)
+  protected void service(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+
+     if (request.getRequestURI().endsWith("/twilio-voice")) {
+       twilioVoice(request,response);
+     } else if (request.getRequestURI().endsWith("/twilio-text")) {
+       twilioText(request,response);
+     } else {
+       showHome(request,response);
+     }
+
+  }
+
 
     // Example pulled from the Twilio guide at:
     // https://www.twilio.com/docs/quickstart/java/twiml/say-response
+    // Responds to a voice call with the message defined in Say
+    public void twilioVoice(HttpServletRequest request, HttpServletResponse response) 
+        throws IOException {
 
         TwiMLResponse twiml = new TwiMLResponse();
         Say say = new Say("Hello Twilio Monkey");
@@ -25,20 +39,30 @@ public class Main extends HttpServlet {
         } catch (TwiMLException e) {
             e.printStackTrace();
         }
-        resp.setContentType("application/xml");
-        resp.getWriter().print(twiml.toXML());
-  }
+        response.setContentType("application/xml");
+        response.getWriter().print(twiml.toXML());
+    }
+
+    // Handle incoming SMS messages and send a response
+    public void twilioText(HttpServletRequest request, HttpServletResponse response) 
+        throws IOException {
+      
+        TwiMLResponse twiml = new TwiMLResponse();
+        Message message = new Message("Hello, Mobile Monkey");
+        try {
+            twiml.append(message);
+        } catch (TwiMLException e) {
+            e.printStackTrace();
+        }
+        response.setContentType("application/xml");
+        response.getWriter().print(twiml.toXML());
+    }
 
 
     // Testing methods - simply print out text
   private void showHome(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     resp.getWriter().print("Hello from Java!");
-  }
-
-  private void showAway(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-    resp.getWriter().print("this is away stuff");
   }
 
 
