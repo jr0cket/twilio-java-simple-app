@@ -25,8 +25,8 @@ public class Main extends HttpServlet {
         } catch (TwiMLException e) {
             e.printStackTrace();
         }
-        response.setContentType("application/xml");
-        response.getWriter().print(twiml.toXML());
+        resp.setContentType("application/xml");
+        resp.getWriter().print(twiml.toXML());
   }
 
 
