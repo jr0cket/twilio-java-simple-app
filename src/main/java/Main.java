@@ -32,10 +32,10 @@ public class Main extends HttpServlet {
     public void twilioVoice(HttpServletRequest request, HttpServletResponse response) 
         throws IOException {
 
-        TwiMLResponse twiml = new TwiMLResponse();
+        TwiMLResponse twimlvoice = new TwiMLResponse();
         Say say = new Say("Hello Twilio Monkey");
         try {
-            twiml.append(say);
+            twimlvoice.append(say);
         } catch (TwiMLException e) {
             e.printStackTrace();
         }
@@ -47,10 +47,10 @@ public class Main extends HttpServlet {
     public void twilioText(HttpServletRequest request, HttpServletResponse response) 
         throws IOException {
       
-        TwiMLResponse twiml = new TwiMLResponse();
+        TwiMLResponse twimltext = new TwiMLResponse();
         Message message = new Message("Hello, Mobile Monkey");
         try {
-            twiml.append(message);
+            twimltext.append(message);
         } catch (TwiMLException e) {
             e.printStackTrace();
         }
