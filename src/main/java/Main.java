@@ -12,34 +12,12 @@ import com.twilio.sdk.verbs.Say;
 
 public class Main extends HttpServlet {
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+  protected void service(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
-    if (req.getRequestURI().endsWith("/db")) {
-      showDatabase(req,resp);
-    } else if (req.getRequestURI().endsWith("/away")) {
-        showAway(req,resp);
-    } else if (req.getRequestURI().endsWith("/twilio")) {
-        twilioService(req,resp);
-    } else {
-      showHome(req,resp);
-    }
-  }
+    // Example pulled from the Twilio guide at:
+    // https://www.twilio.com/docs/quickstart/java/twiml/say-response
 
-  private void showHome(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-    resp.getWriter().print("Hello from Java!");
-  }
-
-  private void showAway(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-    resp.getWriter().print("this is away stuff");
-  }
-
-
-public void twilioService(HttpServletRequest request, HttpServletResponse response) 
-      throws IOException {
-        // Create a TwiML response and add our friendly message.
         TwiMLResponse twiml = new TwiMLResponse();
         Say say = new Say("Hello Twilio Monkey");
         try {
@@ -49,7 +27,19 @@ public void twilioService(HttpServletRequest request, HttpServletResponse respon
         }
         response.setContentType("application/xml");
         response.getWriter().print(twiml.toXML());
-    }
+  }
+
+
+    // Testing methods - simply print out text
+  private void showHome(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
+    resp.getWriter().print("Hello from Java!");
+  }
+
+  private void showAway(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
+    resp.getWriter().print("this is away stuff");
+  }
 
 
   private void showDatabase(HttpServletRequest req, HttpServletResponse resp)
