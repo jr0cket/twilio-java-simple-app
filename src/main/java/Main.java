@@ -14,6 +14,8 @@ public class Main extends HttpServlet {
 
     if (req.getRequestURI().endsWith("/db")) {
       showDatabase(req,resp);
+    } else if (req.getRequestURI().endsWith("/away")) {
+        showAway(req,resp)
     } else {
       showHome(req,resp);
     }
@@ -23,6 +25,12 @@ public class Main extends HttpServlet {
       throws ServletException, IOException {
     resp.getWriter().print("Hello from Java!");
   }
+
+  private void showAway(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
+    resp.getWriter().print("this is away stuff");
+  }
+
 
   private void showDatabase(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
