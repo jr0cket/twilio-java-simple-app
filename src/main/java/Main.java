@@ -40,7 +40,7 @@ public class Main extends HttpServlet {
             e.printStackTrace();
         }
         response.setContentType("application/xml");
-        response.getWriter().print(twiml.toXML());
+        response.getWriter().print(twimlvoice.toXML());
     }
 
     // Handle incoming SMS messages and send a response
@@ -55,7 +55,7 @@ public class Main extends HttpServlet {
             e.printStackTrace();
         }
         response.setContentType("application/xml");
-        response.getWriter().print(twiml.toXML());
+        response.getWriter().print(twimltext.toXML());
     }
 
 
