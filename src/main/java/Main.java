@@ -21,8 +21,7 @@ public class Main extends HttpServlet {
 
   private void showHome(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    String fart = "Do farts dream of curry"
-    resp.getWriter().print(fart);
+    resp.getWriter().print("Hello from Java!");
   }
 
   private void showDatabase(HttpServletRequest req, HttpServletResponse resp)
